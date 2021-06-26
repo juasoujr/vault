@@ -1,0 +1,324 @@
+swagger: "2.0"
+info:
+  description: "Tis is a documentation for template-ms - A microservice component of vast 2.0 application."
+  version: "1.0.0"
+  title: "Template-ms"
+host: "localhost:3003"
+basePath: "/"
+tags:
+- name: "Template"
+  description: "Template microservice"
+schemes:
+- "http"
+paths:
+  /template/:
+    post:
+      tags:
+      - "template"
+      summary: "Adds a new template to database"
+      description: ""
+      operationId: "addNewTemplate"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: ""
+        required: true
+        type: "object"
+        properties:
+          type:
+            $ref: "#/definitions/type"
+          name:
+            $ref: "#/definitions/name"
+          provider:
+            $ref: "#/definitions/provider"
+          status:
+            $ref: "#/definitions/status"
+          tenant_id:
+            $ref: "#/definitions/tenant_id"
+          project_id:
+            $ref: "#/definitions/project_id"
+          data:
+            $ref: "#/definitions/data"
+      responses:
+        default:
+          description: "successful operation"
+  /template/{templateId}:
+    get:
+      tags:
+      - "template"
+      summary: "Gets template by Id"
+      description: ""
+      operationId: "getbyId"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "templateId"
+        in: "path"
+        description: "ID of template to return"
+        required: true
+        type: "string"
+        format: "uid"
+      responses:
+        default:
+          description: "successful operation"
+    delete:
+      tags:
+      - "template"
+      summary: "Deletes a template by Id"
+      description: ""
+      operationId: "deletebyId"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "templateId"
+        in: "path"
+        description: "ID of template to delete"
+        required: true
+        type: "string"
+        format: "uid"
+      responses:
+        default:
+          description: "successful operation"
+    put:
+      tags:
+      - "template"
+      summary: "Replaces a template by Id"
+      description: ""
+      operationId: "replacebyId"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "templateId"
+        in: "path"
+        description: "ID of template to return"
+        required: true
+        type: "string"
+        format: "uid"
+      - in: "body"
+        name: "body"
+        description: ""
+        required: true
+        type: "object"
+        properties:
+          type:
+            $ref: "#/definitions/type"
+          name:
+            $ref: "#/definitions/name"
+          provider:
+            $ref: "#/definitions/provider"
+          status:
+            $ref: "#/definitions/status"
+          tenant_id:
+            $ref: "#/definitions/tenant_id"
+          project_id:
+            $ref: "#/definitions/project_id"
+          data:
+            $ref: "#/definitions/data"
+      responses:
+        default:
+          description: "successful operation"
+  /template/listAll:
+    get:
+      tags:
+      - "template"
+      summary: "Gets all Templates"
+      description: ""
+      operationId: "getAllTemplates"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      responses:
+        default:
+          description: "successful operation"
+definitions:
+  StatusObject:
+    type: "object"
+    required:
+    - "deploy_id"
+    - "status"
+    properties:
+      deploy_id:
+        $ref: "#/definitions/template_id"
+      status:
+        $ref: "#/definitions/status"
+  TemplateObject:
+    type: "object"
+    properties:
+      template_id:
+        $ref: "#/definitions/template_id"
+      type:
+        $ref: "#/definitions/type"
+      name:
+        $ref: "#/definitions/name"
+      provider:
+        $ref: "#/definitions/provider"
+      status:
+        $ref: "#/definitions/status"
+      tenant_id:
+        $ref: "#/definitions/tenant_id"
+      project_id:
+        $ref: "#/definitions/project_id"
+      data:
+        $ref: "#/definitions/data"
+  status:
+    type: "string"
+    description: "Template status"
+    default: "disabled"
+    enum:
+    - "enabled"
+    - "disabled"
+  type:
+    type: "string"
+    description: "Template type"
+    default: "iac"
+    enum:
+    - "iac"
+    - "kubernetes"
+  provider:
+    type: "string"
+    description: "Template provider"
+    default: "aws"
+    enum:
+    - "aws"
+    - "azure"
+    - "gcloud"
+    - "nextcloud"
+    - "ukcloud"
+  template_id:
+    type: "string"
+    description: "Template id"
+    format: "uid"
+  name:
+    type: "string"
+    description: "Template name"
+    format: "string"
+  tenant_id:
+    type: "string"
+    default: "tenant123"
+    description: "Tenant id"
+    format: "uid"
+  project_id:
+    type: "number"
+    default: 25
+    description: "Project id"
+    format: "int32"
+  data:
+    type: "object"
+    default:
+      vms:
+      - vm_id: 0
+        sg_id: 0
+        subnet_id: 1
+        instance_type: t2.medium
+        vm_name: nextcloud-demo
+        private_ip: 172.16.1.101
+        device_name: "/dev/sda"
+        volume_type: gp2
+        volume_size: '40'
+        encrypted: false
+        delete_on_termination: true
+      vpc:
+      - vpc_id: 0
+        vpc_cidr_block: 172.16.0.0/16
+        vpc_name: demo.viewdeck.local
+      subnets:
+      - subnet_id: 0
+        vpc_id: 0
+        subnet_cidr_block: 172.16.0.0/24
+        subnet_name: app.demo.viewdeck.local
+        subnet_availability_zone: us-east-1a
+      - subnet_id: 1
+        vpc_id: 0
+        subnet_cidr_block: 172.16.1.0/24
+        subnet_name: public.demo.viewdeck.local
+        subnet_availability_zone: us-east-1a
+      sgs:
+      - sg_id: 0
+        sg_name: sg1.public.demo.viewdeck.local
+        vpc_id: 0
+      - sg_id: 1
+        sg_name: sg2.public.demo.viewdeck.local
+        vpc_id: 0
+      sg_rules:
+      - sg_rule_id: 0
+        sg_id: 0
+        type: ingress
+        from_port: '22'
+        to_port: '22'
+        protocol: TCP
+        cidr_blocks:
+          - 0.0.0.0/0
+      - sg_rule_id: 1
+        sg_id: 0
+        type: ingress
+        from_port: '80'
+        to_port: '80'
+        protocol: TCP
+        cidr_blocks:
+          - 0.0.0.0/0
+      - sg_rule_id: 2
+        sg_id: 0
+        type: ingress
+        from_port: '443'
+        to_port: '443'
+        protocol: TCP
+        cidr_blocks:
+          - 0.0.0.0/0
+      - sg_rule_id: 3
+        sg_id: 0
+        type: egress
+        from_port: '0'
+        to_port: '0'
+        protocol: "-1"
+        cidr_blocks:
+          - 0.0.0.0/0
+      - sg_rule_id: 4
+        sg_id: 1
+        type: ingress
+        from_port: '22'
+        to_port: '22'
+        protocol: TCP
+        cidr_blocks:
+          - 0.0.0.0/0
+      - sg_rule_id: 5
+        sg_id: 1
+        type: egress
+        from_port: '0'
+        to_port: '0'
+        protocol: "-1"
+        cidr_blocks:
+        - 0.0.0.0/0
+      igws:
+      - igw_id: 0
+        igw_name: igw1.demo.viewdeck.local
+        vpc_id: 0
+      route_tables:
+      - route_table_id: 0
+        route_table_name: rtt1.public.demo.viewdeck.local
+        vpc_id: 0
+      - route_table_id: 1
+        route_table_name: rtt2.public.demo.viewdeck.local
+        vpc_id: 0
+      routes:
+      - route_id: 0
+        route_table_id: 0
+        destination_cidr: 0.0.0.0/0
+        destination_type: gateway_id
+        igw_id: 0
+      associations:
+      - association_id: 0
+        subnet_id: 1
+        route_table_id: 0
+    description: "Object with variables"
+    format: "object"

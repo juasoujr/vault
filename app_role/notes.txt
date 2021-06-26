@@ -1,0 +1,27 @@
+Key        Value
+---        -----
+role_id    3ed6a369-6b98-5734-b947-e5bb459fd728
+
+Key                   Value
+---                   -----
+secret_id             9381f1db-f140-29ef-b079-5b12fc61c4d0
+secret_id_accessor    af9ad8c0-0121-d161-bffc-3595c5845b3a
+secret_id_ttl         0s
+
+
+vault write auth/approle/login role_id="3ed6a369-6b98-5734-b947-e5bb459fd728" secret_id="9381f1db-f140-29ef-b079-5b12fc61c4d0"
+
+vault policy write cloudbuilder -<<EOF
+# Read-only permission on secrets stored at 'cloudbuilder/data/viewdeck/088476fa-31c9-4cb2-b24a-7eaf39aa5cd1'
+path "cloudbuilder/data/viewdeck/088476fa-31c9-4cb2-b24a-7eaf39aa5cd1" {
+  capabilities = [ "read" ]
+ }
+EOF
+
+ vault kv get cloudbuilder/viewdeck/088476fa-31c9-4cb2-b24a-7eaf39aa5cd1
+
+
+ vault write auth/approle/role/jenkins token_policies="jenkins,cloudbuilder" token_ttl=1h token_max_ttl=4h
+
+
+s.33vuW8ZQtdvv5KiEKduzER5w
