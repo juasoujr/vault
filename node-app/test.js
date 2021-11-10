@@ -185,6 +185,13 @@ console.log(teste2)
 //  })
 //  .catch((err) => console.error('error message:' + err.message));
 
+const asyncFunction = async () => {
+   const resultVault = await vault.read('cloudbuilder/vast20/jsouza/3a2d8e9a-64e6-4667-8e76-ba687c30bf98');
+   console.log('resultVault', resultVault)
+ }
+
+asyncFunction();
+
 vault.read('cloudbuilder/vast20/jsouza/3a2d8e9a-64e6-4667-8e76-ba687c30bf98')
  .then( (result) => {
     var data = result.data;
