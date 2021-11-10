@@ -12,20 +12,23 @@ var options = {
     apiVersion: 'v1',
     endpoint: 'http://10.64.1.20:8200',
     token: 's.80bptLTnuCGbk7UrOPi2Ps72'
+    // endpoint: 'http://localhost:8200',
+    // token: 's.ydiWafXnJAoVHPF17fy77gF5'
+
 }
 
 var vault = require("node-vault")(options);
 
-var roleName = '1_juarez.souza'
+// var roleName = '1_juarez.souza'
 
 
-vault.getApproleRoleId({ role_name: roleName }).then(result => {
-    return result.data.role_id
-    })
+// vault.getApproleRoleId({ role_name: roleName }).then(result => {
+//     return result.data.role_id
+//     })
 
-console.log(roleId)
+// console.log(roleId)
 
-var roleId = await vault.getApproleRoleId({ role_name: roleName })
+// var roleId = await vault.getApproleRoleId({ role_name: roleName })
 
 /*
 const mountPoint = 'approle';
@@ -117,11 +120,10 @@ vault.health()
 .catch((err) => console.error('error message:' + err.message));
 */
 
-/*
-vault.status()
-.then(console.log)
-.catch((err) => console.error(err.message));
-*/
+
+// vault.status()
+// .then(console.log)
+// .catch((err) => console.error(err.message));
 
 /*
 vault.read(`auth/approle/role/${roleName}`)
@@ -174,13 +176,22 @@ var teste1 = 'secret/'
 var teste2 = teste1 + 'juarez'
 
 console.log(teste2)
+*/
 
-vault.read('secret/juarez')
+// vault.read('cloudbuilder/vast20/jsouza/3a2d8e9a-64e6-4667-8e76-ba687c30bf98')
+//  .then( (result) => {
+//     var data = result.data;
+//     console.log(data)
+//  })
+//  .catch((err) => console.error('error message:' + err.message));
+
+vault.read('cloudbuilder/vast20/jsouza/3a2d8e9a-64e6-4667-8e76-ba687c30bf98')
  .then( (result) => {
-    var data = result.data.theuser;
+    var data = result.data;
     console.log(data)
  })
  .catch((err) => console.error('error message:' + err.message));
+
 
 /* 
  vault.list('/secret/')
