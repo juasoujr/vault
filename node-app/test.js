@@ -1,4 +1,3 @@
-
 /*
 role_id 4cc7ac1c-0d4e-1bbf-2127-e34d1dafad02
 Key                Value                               
@@ -79,7 +78,7 @@ vault.auths()
   return vault.enableAuth({
     mount_point: mountPoint,
     type: 'approle',
-    description: 'Approle auth',
+    deion: 'Approle auth',
   });
 })
 .then(() => vault.addApproleRole({ role_name: roleName, policies: 'fromTest_pol, admins' }))
@@ -185,19 +184,38 @@ console.log(teste2)
 //  })
 //  .catch((err) => console.error('error message:' + err.message));
 
-const asyncFunction = async () => {
-   const resultVault = await vault.read('cloudbuilder/vast20/jsouza/3a2d8e9a-64e6-4667-8e76-ba687c30bf98');
-   console.log('resultVault', resultVault)
- }
+const express = require('express')
+const app = express()
+const port = 3000
 
-asyncFunction();
+app.get('/', (req, res) => {
+  vault.read('cloudbuilder/vast20/jsouza/3a2d8e9a-64e6-4667-8e76-ba687c30bf98').then((result) => {
+      res.json(result)
+    })
+    .catch((err) => {
+      console.error('error message:' + err.message)
+      res.json(err)
+    });
+})
 
-vault.read('cloudbuilder/vast20/jsouza/3a2d8e9a-64e6-4667-8e76-ba687c30bf98')
- .then( (result) => {
-    var data = result.data;
-    console.log(data)
- })
- .catch((err) => console.error('error message:' + err.message));
+app.listen(port, () => {
+  console.log(`Example app listening at http://localhost:${port}`)
+})
+
+
+// const asyncFunction = async () => {
+//    const resultVault = await vault.read('cloudbuilder/vast20/jsouza/3a2d8e9a-64e6-4667-8e76-ba687c30bf98');
+//    console.log('resultVault', resultVault)
+//  }
+
+// asyncFunction();
+
+// vault.read('cloudbuilder/vast20/jsouza/3a2d8e9a-64e6-4667-8e76-ba687c30bf98')
+//  .then( (result) => {
+//     var data = result.data;
+//     console.log(data)
+//  })
+//  .catch((err) => console.error('error message:' + err.message));
 
 
 /* 
